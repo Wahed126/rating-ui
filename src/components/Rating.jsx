@@ -4,8 +4,8 @@ const Rating = () => {
     <div className="rating-container">
       <h2>Rate Your Experience</h2>
       <div className="stars">
-        {stars.map((star) => (
-          <span key={star} className="star">
+        {stars.map((star, index) => (
+          <span key={index} className="star">
             {"\u2605"}
           </span>
         ))}
