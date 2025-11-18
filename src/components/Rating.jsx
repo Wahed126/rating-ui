@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import Star from "./Star";
 const Rating = ({
   heading = "Rate Your Experience",
@@ -7,7 +7,16 @@ const Rating = ({
 }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const [submited, setSubmited] = useState(false);
   const stars = Array.from({ length: 5 }, (_, i) => i + 1);
+  const handleSubmit = () => {
+    rating > 0 ? setSubmited(true) : setSubmited(false);
+  };
+  const closeModal = () => {
+    setSubmited(false);
+    setRating(0);
+    setHover(0);
+  };
   return (
     <div className="rating-container">
       <h2>{heading}</h2>
@@ -23,18 +32,30 @@ const Rating = ({
             hoverOut={() => setHover(null)}
             key={star}
           />
-          //   <span
-          //     onClick={() => setRating(star)}
-          //     onMouseEnter={() => setHover(star)}
-          //     onMouseLeave={() => setHover(0)}
-          //     key={index}
-          //     className={`star ${star <= (hover || rating) ? "active" : ""}`}
-          //   >
-          //
-          //   </span>
         ))}
       </div>
       {rating > 0 && <p className="feedback">{feedbackMessages[rating - 1]}</p>}
+      <button
+        className="submit-btn"
+        onClick={handleSubmit}
+        disabled={rating === 0}
+      >
+        Submit
+      </button>
+      {/* Modal */}
+      {submited && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Thank you</h2>
+            <p>
+              You rated us {rating} star{rating > 1 ? "s" : ""}
+            </p>
+            <button className="close-btn" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
