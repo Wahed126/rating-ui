@@ -1,11 +1,21 @@
+import { useState } from "react";
 const Rating = () => {
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
   const stars = Array.from({ length: 5 }, (_, i) => i + 1);
   return (
     <div className="rating-container">
       <h2>Rate Your Experience</h2>
+      <p>{hover}</p>
       <div className="stars">
         {stars.map((star, index) => (
-          <span key={index} className="star">
+          <span
+            onClick={() => setRating(star)}
+            onMouseEnter={() => setHover(star)}
+            onMouseLeave={() => setHover(0)}
+            key={index}
+            className="star"
+          >
             {"\u2605"}
           </span>
         ))}
